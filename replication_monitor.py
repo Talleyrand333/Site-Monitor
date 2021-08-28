@@ -37,7 +37,7 @@ class DatabaseMonitor:
         try:
             connection = mysql.connector.connect(host=self.dbhost, user=self.dbuser, passwd=self.password)
         except:
-            # raise
+            raise
             #Send mail to users or attempt to restart
             print("ERROR  OCCURED")
             self.send_mail()
