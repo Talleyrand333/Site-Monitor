@@ -35,9 +35,9 @@ class DatabaseMonitor:
         #Check the database status of a local instance
         connection = False
         try:
-            connection = mysql.connector.connect(host=self.dbhost, user=self.dbuser, passwd=self.password)
+            connection = mysql.connector.connect(host=self.dbhost, user=self.dbuser, passwd=self.dbpass)
         except:
-            raise
+            # raise
             #Send mail to users or attempt to restart
             print("ERROR  OCCURED")
             self.send_mail()
