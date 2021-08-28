@@ -20,8 +20,8 @@ class DatabaseMonitor:
 
     def fetch_credential_status(self,result_set) -> dict:
         #Analyse the replication status of the result sent from the python monitor.
-        slave_io = "\033[1;32;40m "+ result_set[0]['Slave_IO_Running'] 
-        slave_sql = "\033[1;32;40m "+result_set[0]['Slave_SQL_Running']
+        slave_io =  result_set[0]['Slave_IO_Running'] 
+        slave_sql = result_set[0]['Slave_SQL_Running']
         replication_status = True if slave_io and slave_sql == "Yes" else False
         date = datetime.date.today().strftime("%Y-%m-%d")
         data_ = """Subject: {}      \n\n Dear Team, \n Please see the latest update from the Database Instance of the CPFA for {}. \n\t Slave IO : {}\n
