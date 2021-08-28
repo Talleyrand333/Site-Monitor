@@ -39,6 +39,7 @@ class DatabaseMonitor:
         except:
             # raise
             #Send mail to users or attempt to restart
+            print("ERROR  OCCURED")
             self.send_mail()
 
         if connection:
@@ -52,6 +53,7 @@ class DatabaseMonitor:
             credentials = self.fetch_credential_status(json_data)
             self.send_mail(arg_list=credentials)
         else:
+            print("CANNOT CONNECT")
             self.send_mail()
 
 
