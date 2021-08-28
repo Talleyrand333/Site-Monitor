@@ -14,7 +14,7 @@ class DatabaseMonitor:
         self.dbuser= 'monitor'
         self.dbpass='Y563NDHE!$@'
         # self.dbpass='admin'
-        self.recipients = ['ebukaakeru@gmail.com','ebuka.akeru@manqala.com','collins.frederick@tepngcpfa.com']
+        self.recipients = ['ebuka.akeru@manqala.com','collins.frederick@tepngcpfa.com']
         self.connection = False
 
 
