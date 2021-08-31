@@ -6,8 +6,10 @@ import smtplib
 class DatabaseMonitor:
     def __init__(self) -> None:
         #Initialize email and database credentials from decrypted file saved in folder
-        self.email_user = 'manqalaemailacc@gmail.com'
-        self.password = 'paulpogba6'
+        # self.email_user = 'manqalaemailacc@gmail.com'
+        self.email_user = 'p020004@tepngcpfa.com'
+        # self.password = 'paulpogba6'
+        self.password = '@DM4ERP&Next_2021'
         self.sub = "ERPNext BCP ALERT!"
         self.msg = "NOT CONNECTED"
         self.dbhost = 'localhost'
@@ -61,7 +63,7 @@ class DatabaseMonitor:
     def send_mail(self,arg_list:dict = None) -> None:
         #Simple smtp function that receives a dictionary of arguments or Nothing and sends a response to a defined group.
         body = 'Subject: {} \n\n\nThe  database of the BCP Site is not responding, Please take a look ASAP'.format(self.sub) if not arg_list else arg_list['body']
-        with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+        with smtplib.SMTP('smtp.office365.com', 587) as smtp:
             smtp.ehlo()
             smtp.starttls()
             smtp.ehlo()
