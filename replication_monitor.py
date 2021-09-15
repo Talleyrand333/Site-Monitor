@@ -1,23 +1,32 @@
 import datetime
 import mysql.connector
 import smtplib
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 
 class DatabaseMonitor:
     def __init__(self) -> None:
         #Initialize email and database credentials from decrypted file saved in folder
-        # self.email_user = 'manqalaemailacc@gmail.com'
-        self.email_user = 'p020004@tepngcpfa.com'
-        # self.password = 'paulpogba6'
-        self.password = '@DM4ERP&Next_2021'
+        self.email_user = os.getenv('EM_USER')
+        # self.email_user = 'p020004@tepngcpfa.com'
+        self.password = os.getenv('EM_PASS')
+        # self.password = '@DM4ERP&Next_2021'
         self.sub = "ERPNext BCP ALERT!"
         self.msg = "NOT CONNECTED"
-        self.dbhost = 'localhost'
-        self.dbuser= 'monitor'
-        self.dbpass='Y563NDHE!$@'
+        self.dbhost =  os.getenv('DB_HOST')
+        # self.dbuser= 'monitor'
+        # self.dbpass='Y563NDHE!$@'
         # self.dbpass='admin'
-        self.recipients = ['dev@manqala.com','ict@tepngcpfa.com ']
+        self.dbuser= os.getenv('DB_USER')
+        self.dbpass= os.getenv('DB_PASS')
+        # self.primary_recipients = ['ebuka.akeru@manqala.com','collins.frederick@tepngcpfa.com']
+        self.primary_recipients = ['ebuka.akeru@manqala.com']
+        self.secondary_recipients = ['dev@manqala.com','ict@tepngcpfa.com']
         self.connection = False
+        
 
 
     def fetch_credential_status(self,result_set) -> dict:
@@ -30,10 +39,14 @@ class DatabaseMonitor:
         Slave SQL: {} \n\nFrom the parsed report, the replication status is {} \n\nPlease See the dump of the replication status \n\n{} """.format(self.sub,date,slave_io,slave_sql, 'Working' if replication_status else 'Not Working',result_set[0])
         credentials = {}
         credentials['body'] = data_
+        credentials['status'] = replication_status
+       
         return credentials
 
 
-    def check_database_uptime(self) -> bool:
+
+
+    def check_database_uptime_status(self) -> bool:
         #Check the database status of a local instance
         connection = False
         try:
@@ -58,14 +71,17 @@ class DatabaseMonitor:
             print("CANNOT CONNECT")
             self.send_mail()
 
-
+    
 
     def send_mail(self,arg_list:dict = None) -> None:
         #Simple smtp function that receives a dictionary of arguments or Nothing and sends a response to a defined group.
-        body = 'Subject: {} \n\n\nThe  database of the BCP Site is not responding, Please take a look ASAP'.format(self.sub) if not arg_list else arg_list['body']
+        body = 'Subject: {} \n\n\nThe  database of the BCP Site is not responding, Please take a look ASAP!'.format(self.sub) if not arg_list else arg_list['body']
         with smtplib.SMTP('smtp.office365.com', 587) as smtp:
             smtp.ehlo()
             smtp.starttls()
             smtp.ehlo()
             smtp.login(self.email_user, self.password)
-            smtp.sendmail(self.email_user, self.recipients, body)
+            recipients = self.primary_recipients+self.secondary_recipients if  not arg_list.get('status') else self.primary_recipients
+            smtp.sendmail(self.email_user, recipients, body)
+    
+    
