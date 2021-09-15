@@ -29,7 +29,7 @@ class DatabaseMonitor_T:
         self.dbuser= os.getenv('DB_USER')
         self.dbpass= os.getenv('DB_PASS')
         # self.primary_recipients = ['ebuka.akeru@manqala.com','collins.frederick@tepngcpfa.com']
-        self.primary_recipients = ['ebuka.akeru@manqala.com','akeruebuka@gmail.com']
+        self.primary_recipients = ['ebuka.akeru@manqala.com','collins.frederick@tepngcpfa.com']
         self.secondary_recipients = ['dev@manqala.com','ict@tepngcpfa.com']
         self.connection = False
         
@@ -110,11 +110,7 @@ class DatabaseMonitor_T:
         date = datetime.date.today().strftime("%Y-%m-%d")
         font_color = 'color:green' if arg_list['status'] else 'color:red'
         # data_ = """Subject: {}      \n\n Dear Team, \n Please see the latest update from the Database Instance of the CPFA for {}. \n\t Slave IO : {}\n
-        # Slave SQL: {} \n\nFrom the parsed report, the replication status is {} \n\nPlease See the dump of the replication status \n\n{} """.format(self.sub,date,slave_io,slave_sql, 'Working' if replication_status else 'Not Working',result_set[0])
-        
-        
-        
-        
+        # Slave SQL: {} \n\nFrom the parsed report, the replication status is {} \n\nPlease See the dump of the replication status \n\n{} """.format(self.sub,date,slave_io,slave_sql, 'Working' if replication_status else 'Not Working',result_set[0])        
         msg.set_content(arg_list['message'],subtype='html')
         
         with smtplib.SMTP('smtp.outlook.com', 587) as smtp:
@@ -124,4 +120,6 @@ class DatabaseMonitor_T:
             smtp.login(self.email_user, self.password) 
             # print(self.email_user)
             recipients = self.primary_recipients if arg_list['status'] else self.primary_recipients+self.secondary_recipients
+            print("BEFORE SEND")
+            print(recipients)
             smtp.sendmail(self.email_user,recipients, msg.as_string())
