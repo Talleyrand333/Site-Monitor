@@ -47,6 +47,7 @@ class DatabaseMonitor_T:
         date = datetime.date.today().strftime("%Y-%m-%d")
         data_ = """Subject: {}      \n\n Dear Team, \n Please see the latest update from the Database Instance of the CPFA for {}. \n\t Slave IO : {}\n
         Slave SQL: {} \n\nFrom the parsed report, the replication status is {} \n\nPlease See the dump of the replication status \n\n{} """.format(self.sub,date,slave_io,slave_sql, 'Working' if replication_status else 'Not Working',result_set[0])
+        font_color = 'color:green' if replication_status else 'color:red'
         alt_data = '''
         <!DOCTYPE html>
         <html>
@@ -62,10 +63,12 @@ class DatabaseMonitor_T:
                 <p> Please See the dump of the replication status query  </p>
             </body>
         </html>
-        '''.format(date,'color:green',"slave_io","slave_sql","WORKING",)
+        '''.format(date,font_color,slave_io,slave_sql,"WORKING" if replication_status else "NOT WORKING",)
+        
         
         
         credentials = {}
+        credentials['message'] = alt_data
         credentials['body'] = data_
         credentials['status'] = replication_status
        
@@ -100,49 +103,25 @@ class DatabaseMonitor_T:
     
 
     def send_mail(self,arg_list:dict = None) -> None:
-        slave_io = "YES"
-        slave_sql="NO"
         msg = email.message.EmailMessage()
-        msg['Subject'] = 'Here is my newsletter'
+        msg['Subject'] = 'BCP UPDATE'
         msg['From'] = self.email_user
         msg['To'] = self.primary_recipients
-        replication_status = True if slave_io and slave_sql == "Yes" else False
         date = datetime.date.today().strftime("%Y-%m-%d")
-        font_color = 'color:green' if replication_status else 'color:red'
+        font_color = 'color:green' if arg_list['status'] else 'color:red'
         # data_ = """Subject: {}      \n\n Dear Team, \n Please see the latest update from the Database Instance of the CPFA for {}. \n\t Slave IO : {}\n
         # Slave SQL: {} \n\nFrom the parsed report, the replication status is {} \n\nPlease See the dump of the replication status \n\n{} """.format(self.sub,date,slave_io,slave_sql, 'Working' if replication_status else 'Not Working',result_set[0])
         
-        alt_data = '''
-        <!DOCTYPE html>
-        <html>
-            <body>
-                <div>
-                    <p> Dear Team,<br/> Please see the latest update from the Database Instance of the CPFA for {}. </p>
-                    
-
-                </div>
-                <div style="{}">
-                    
-                    <p style="font-family:Georgia, 'Times New Roman', Times, serif;color#454349;">SLAVE IO: {}</p>
-                    <p style="font-family:Georgia, 'Times New Roman', Times, serif;color#454349;">SLAVE SQL: {}</p>
-
-                    
-
-                    <p>From the parsed report, the replication status is {} </p>
-                </div>
-                <p> Please See the dump of the replication status query  </p>
-            </body>
-        </html>
-        '''.format(date,font_color,slave_io,slave_sql,"WORKING" if replication_status else "NOT WORKING")
         
         
-        msg.set_content(alt_data,subtype='html')
-        # print(msg.as_string())
-        with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+        
+        msg.set_content(arg_list['message'],subtype='html')
+        
+        with smtplib.SMTP('smtp.outlook.com', 587) as smtp:
             smtp.ehlo()
             smtp.starttls()
             smtp.ehlo()
             smtp.login(self.email_user, self.password) 
             # print(self.email_user)
-            print(msg.as_string())
-            smtp.sendmail(self.email_user,self.primary_recipients, msg.as_string())
+            recipients = self.primary_recipients if arg_list['status'] else self.primary_recipients+self.secondary_recipients
+            smtp.sendmail(self.email_user,recipients, msg.as_string())
