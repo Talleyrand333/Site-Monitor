@@ -14,11 +14,11 @@ load_dotenv()
 class DatabaseMonitor_T:
     def __init__(self) -> None:
         #Initialize email and database credentials from decrypted file saved in folder
-        # self.email_user = os.getenv('EM_USER')
+        self.email_user = os.getenv('EM_USER')
         # self.email_user = 'p020004@tepngcpfa.com'
-        self.email_user = 'manqalaemailacc@gmail.com'
-        self.password = 'paulpogba6'
-        # self.password = os.getenv('EM_PASS')
+        # self.email_user = 'manqalaemailacc@gmail.com'
+        # self.password = 'paulpogba6'
+        self.password = os.getenv('EM_PASS')
         # self.password = '@DM4ERP&Next_2021'
         self.sub = "ERPNext BCP ALERT!"
         self.msg = "NOT CONNECTED"
