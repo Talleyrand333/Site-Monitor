@@ -117,9 +117,12 @@ class DatabaseMonitor_T:
             smtp.ehlo()
             smtp.starttls()
             smtp.ehlo()
+            print(self.email_user)
+            print(self.password)
             smtp.login(self.email_user, self.password) 
-            # print(self.email_user)
             recipients = self.primary_recipients if arg_list['status'] else self.primary_recipients+self.secondary_recipients
             print("BEFORE SEND")
             print(recipients)
             smtp.sendmail(self.email_user,recipients, msg.as_string())
+
+
