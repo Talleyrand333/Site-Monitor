@@ -57,13 +57,13 @@ class DatabaseMonitor_T:
                 </div>
                 <div style="{}">
                     <p style="font-family:Georgia, 'Times New Roman', Times, serif;color#454349;">SLAVE IO: {}</p>
-                    <p style="font-family:Georgia, 'Times New Roman', Times, serif;color#454349;"SLAVE SQL: {}</p>
+                    <p style="font-family:Georgia, 'Times New Roman', Times, serif;color#454349;">SLAVE SQL: {}</p>
                     <p>From the parsed report, the replication status is {} </p>
                 </div>
-                <p> Please See the dump of the replication status query  </p>
+                <p> Please See the dump of the replication status query  {}</p>
             </body>
         </html>
-        '''.format(date,font_color,slave_io,slave_sql,"WORKING" if replication_status else "NOT WORKING",)
+        '''.format(date,font_color,slave_io,slave_sql,"WORKING" if replication_status else "NOT WORKING",result_set[0])
         
         
         

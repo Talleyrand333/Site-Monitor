@@ -22,8 +22,8 @@ class DatabaseMonitor:
         # self.dbpass='admin'
         self.dbuser= os.getenv('DB_USER')
         self.dbpass= os.getenv('DB_PASS')
-        # self.primary_recipients = ['ebuka.akeru@manqala.com','collins.frederick@tepngcpfa.com']
-        self.primary_recipients = ['ebuka.akeru@manqala.com']
+        self.primary_recipients = ['ebuka.akeru@manqala.com','collins.frederick@tepngcpfa.com']
+        # self.primary_recipients = ['ebuka.akeru@manqala.com']
         self.secondary_recipients = ['dev@manqala.com','ict@tepngcpfa.com']
         self.connection = False
         
