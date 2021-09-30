@@ -84,7 +84,7 @@ class DatabaseMonitor_T:
 
         if connection:
             cursor =  connection.cursor()
-            cursor.execute("SHOW SLAVE 'master03' STATUS")
+            cursor.execute("SHOW SLAVE 'master01' STATUS")
             result_set = cursor.fetchall()
             row_headers = [x[0] for x in cursor.description] #Extract headers
             json_data = []
