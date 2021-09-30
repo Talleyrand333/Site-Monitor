@@ -49,7 +49,7 @@ class DatabaseMonitor_T:
         <html>
             <body>
                 <div>
-                    <p> Dear Team, \n Please see the latest update from the Database Instance of the CPFA for {}. </p>
+                    <p> Dear Team, \n Please see the latest update from the Database Instance of the Convergenix for {}. </p>
                 </div>
                 <div style="{}">
                     <p style="font-family:Georgia, 'Times New Roman', Times, serif;color#454349;">SLAVE IO: {}</p>
