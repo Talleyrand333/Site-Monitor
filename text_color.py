@@ -41,7 +41,7 @@ class DatabaseMonitor_T:
         msg['To'] = self.primary_recipients
         replication_status = True if slave_io and slave_sql == "Yes" else False
         date = datetime.date.today().strftime("%Y-%m-%d")
-        data_ = """Subject: {}      \n\n Dear Team, \n Please see the latest update from the Database Instance of the CPFA for {}. \n\t Slave IO : {}\n
+        data_ = """Subject: {}      \n\n Dear Team, \n Please see the latest update from the Slave Instance of Convergenix for {}. \n\t Slave IO : {}\n
         Slave SQL: {} \n\nFrom the parsed report, the replication status is {} \n\nPlease See the dump of the replication status \n\n{} """.format(self.sub,date,slave_io,slave_sql, 'Working' if replication_status else 'Not Working',result_set[0])
         font_color = 'color:green' if replication_status else 'color:red'
         alt_data = '''
