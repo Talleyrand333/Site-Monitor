@@ -24,6 +24,10 @@ class DatabaseMonitor_T:
         self.primary_recipients = ['ebukaakeru@gmail.com']
         self.secondary_recipients = []
         self.connection = False
+        print(self.email_user)
+        print(self.password)
+        print(self.dbuser)
+        print(self.dbpass)
         
 
 

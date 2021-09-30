@@ -11,19 +11,13 @@ class DatabaseMonitor:
     def __init__(self) -> None:
         #Initialize email and database credentials from decrypted file saved in folder
         self.email_user = os.getenv('EM_USER')
-        # self.email_user = 'p020004@tepngcpfa.com'
         self.password = os.getenv('EM_PASS')
-        # self.password = '@DM4ERP&Next_2021'
         self.sub = "ERPNext BCP ALERT!"
         self.msg = "NOT CONNECTED"
         self.dbhost =  os.getenv('DB_HOST')
-        # self.dbuser= 'monitor'
-        # self.dbpass='Y563NDHE!$@'
-        # self.dbpass='admin'
         self.dbuser= os.getenv('DB_USER')
         self.dbpass= os.getenv('DB_PASS')
         self.primary_recipients = ['ebuka.akeru@manqala.com','collins.frederick@tepngcpfa.com']
-        # self.primary_recipients = ['ebuka.akeru@manqala.com']
         self.secondary_recipients = ['dev@manqala.com','ict@tepngcpfa.com']
         self.connection = False
         
