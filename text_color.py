@@ -15,22 +15,14 @@ class DatabaseMonitor_T:
     def __init__(self) -> None:
         #Initialize email and database credentials from decrypted file saved in folder
         self.email_user = os.getenv('EM_USER')
-        # self.email_user = 'p020004@tepngcpfa.com'
-        # self.email_user = 'manqalaemailacc@gmail.com'
-        # self.password = 'paulpogba6'
         self.password = os.getenv('EM_PASS')
-        # self.password = '@DM4ERP&Next_2021'
         self.sub = "ERPNext BCP ALERT!"
         self.msg = "NOT CONNECTED"
         self.dbhost =  os.getenv('DB_HOST')
-        # self.dbuser= 'monitor'
-        # self.dbpass='Y563NDHE!$@'
-        # self.dbpass='admin'
         self.dbuser= os.getenv('DB_USER')
         self.dbpass= os.getenv('DB_PASS')
-        # self.primary_recipients = ['ebuka.akeru@manqala.com','collins.frederick@tepngcpfa.com']
-        self.primary_recipients = ['ebuka.akeru@manqala.com','collins.frederick@tepngcpfa.com']
-        self.secondary_recipients = ['dev@manqala.com','ict@tepngcpfa.com']
+        self.primary_recipients = ['ebukaakeru@gmail.com']
+        self.secondary_recipients = []
         self.connection = False
         
 
@@ -92,6 +84,7 @@ class DatabaseMonitor_T:
             result_set = cursor.fetchall()
             row_headers = [x[0] for x in cursor.description] #Extract headers
             json_data = []
+            print(result_set)
             for result in result_set:
                 json_data.append(dict(zip(row_headers,result)))
             credentials = self.fetch_credential_status(json_data)
@@ -113,7 +106,7 @@ class DatabaseMonitor_T:
         # Slave SQL: {} \n\nFrom the parsed report, the replication status is {} \n\nPlease See the dump of the replication status \n\n{} """.format(self.sub,date,slave_io,slave_sql, 'Working' if replication_status else 'Not Working',result_set[0])        
         msg.set_content(arg_list['message'],subtype='html')
         
-        with smtplib.SMTP('smtp.outlook.com', 587) as smtp:
+        with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
             smtp.ehlo()
             smtp.starttls()
             smtp.ehlo()
